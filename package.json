@@ -1,0 +1,33 @@
+{
+  "name": "@tidbcloud/prisma-adapter",
+  "version": "5.4.2",
+  "description": "Prisma's driver adapter for \"@tidbcloud/serverless\"",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup ./src/index.ts --format cjs,esm --dts",
+    "lint": "tsc -p ./tsconfig.build.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [],
+  "author": "Shi Yuhang <yuhang.shi@pingcap.com>",
+  "license": "Apache-2.0",
+  "sideEffects": false,
+  "dependencies": {
+    "@prisma/driver-adapter-utils": "5.4.2"
+  },
+  "devDependencies": {
+    "@tidbcloud/serverless": "^0.0.6",
+    "@types/node": "^20.5.1",
+    "tsup": "^7.2.0",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
+  },
+  "peerDependencies": {
+    "@tidbcloud/serverless": "^0.0.6"
+  }
+}
