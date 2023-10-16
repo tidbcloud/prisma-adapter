@@ -7,12 +7,12 @@ Prisma driver adapter for [TiDB Cloud Serverless Driver](https://github.com/tidb
 Before you start, make sure you have:
 
 - A TiDB Cloud account
-- Node  >= 18
+- Node >= 18
 - [Prisma CLI](https://www.prisma.io/docs/concepts/components/prisma-cli) installed
 
 ## Install
 
-You will need to install the `@tidbcloud/prisma-adapter` driver adapter, the `@tidbcloud/serverless` serverless driver and the prisma CLI.
+You will need to install the `@tidbcloud/prisma-adapter` driver adapter and the `@tidbcloud/serverless` serverless driver.
 
 ```
 npm install @tidbcloud/prisma-adapter
