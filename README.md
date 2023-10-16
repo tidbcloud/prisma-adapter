@@ -12,7 +12,7 @@ Before you start, make sure you have:
 
 ## Install
 
-You will need to install the `@tidbcloud/prisma-adapter` driver adapter, the `@tidbcloud/serverless` serverless driver and the prisma CLI.
+You will need to install the `@tidbcloud/prisma-adapter` driver adapter and the `@tidbcloud/serverless` serverless driver.
 
 ```
 npm install @tidbcloud/prisma-adapter
