@@ -135,3 +135,7 @@ try {
   await prisma.$transaction([createUser1, createUser3]) // Operations success together
 }
 ```
+
+## Limitations
+
+- [Set isolation level](https://www.prisma.io/docs/concepts/components/prisma-client/transactions#transaction-isolation-level) is not supported yet.
