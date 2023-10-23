@@ -13,7 +13,21 @@
     "dist",
     "README.md"
   ],
-  "keywords": [],
+  "keywords": [
+    "TiDB",
+    "TiDB Cloud",
+    "serverless",
+    "MySQL",
+    "edge",
+    "Vercel",
+    "Cloudflare",
+    "Netlify",
+    "Bun",
+    "Deno",
+    "database",
+    "SQL",
+    "Prisma"
+  ],
   "author": "Shi Yuhang <yuhang.shi@pingcap.com>",
   "license": "Apache-2.0",
   "sideEffects": false,
