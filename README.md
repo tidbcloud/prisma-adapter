@@ -39,19 +39,20 @@ First, you need to create a Prisma schema file called schema.prisma and define t
 ```
 // schema.prisma
 generator client {
-provider        = "prisma-client-js"
-previewFeatures = ["driverAdapters"]
+    provider        = "prisma-client-js"
+    previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-provider     = "mysql"
-url          = env("DATABASE_URL")
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+}
 
 // define model according to your database table
 model user {
-id    Int     @id @default(autoincrement())
-email String? @unique(map: "uniq_email") @db.VarChar(255)
-name  String? @db.VarChar(255)
+    id    Int     @id @default(autoincrement())
+    email String? @unique(map: "uniq_email") @db.VarChar(255)
+    name  String? @db.VarChar(255)
 }
 ```
 
@@ -132,7 +133,7 @@ try {
   await prisma.$transaction([createUser1, createUser2]) // Operations fail together
 } catch (e) {
   console.log(e)
-  await prisma.$transaction([createUser1, createUser3]) // Operations success together
+  await prisma.$transaction([createUser1, createUser3]) // Operations succeed together
 }
 ```
 
