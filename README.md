@@ -2,20 +2,6 @@
 
 Prisma driver adapter for [TiDB Cloud Serverless Driver](https://github.com/tidbcloud/serverless-js).
 
-## Choose a version
-
-| Adapter | Prisma/Prisma Client | serverless driver |
-|---------|----------------------|-------------------|
-| v5.4.x  | ~v5.4.0              | ^0.0.6            |
-| v5.5.x  | ~v5.5.0              | ^0.0.7            |
-| v5.6.x  | ~v5.6.0              | ^0.0.7            |
-| v5.7.x  | ~v5.7.0              | ^0.0.7            |
-
-Here is the step to step guide for how to choose the version:
-1. Choose the Prisma version: Choose the one as you need.
-2. Choose the adapter version: If you are using Prisma vx.y.z, you should choose the same version of adapter. If there is no adapter version for your Prisma version, you can choose the latest adapter version in vx.y. Open an issue once you find the adapter version is not compatible with Prisma version.
-3. Choose the serverless driver version: You can always use the latest version according to the table above.
-
 ## Before you start
 
 Before you start, make sure you have:
@@ -149,6 +135,20 @@ try {
   await prisma.$transaction([createUser1, createUser3]) // Operations success together
 }
 ```
+
+## Choose a version
+
+| Adapter | Prisma/Prisma Client | serverless driver |
+|---------|----------------------|-------------------|
+| v5.4.x  | ~v5.4.0              | ^0.0.6            |
+| v5.5.x  | ~v5.5.0              | ^0.0.7            |
+| v5.6.x  | ~v5.6.0              | ^0.0.7            |
+| v5.7.x  | ~v5.7.0              | ^0.0.7            |
+
+Here is the step to step guide for how to choose the version:
+1. Choose the Prisma version: Choose the one as you need.
+2. Choose the adapter version: If you are using Prisma vx.y.z, you should choose the same version of adapter. If there is no adapter version for your Prisma version, you can choose the latest adapter version in vx.y. Open an issue once you find the adapter version is not compatible with Prisma version.
+3. Choose the serverless driver version: You can always use the latest version according to the table above.
 
 ## Limitations
 
