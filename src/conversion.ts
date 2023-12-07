@@ -49,9 +49,9 @@ export function fieldToColumnType(field: TiDBCloudColumnType): ColumnType {
     case 'MEDIUMINT':
     case 'UNSIGNED MEDIUMINT':
     case 'INT':
-    case 'UNSIGNED INT':
     case 'YEAR':
       return ColumnTypeEnum.Int32
+    case 'UNSIGNED INT':
     case 'BIGINT':
     case 'UNSIGNED BIGINT':
       return ColumnTypeEnum.Int64
