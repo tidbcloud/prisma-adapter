@@ -25,7 +25,7 @@ class RollbackError extends Error {
 }
 
 class TiDBCloudQueryable<ClientT extends TiDBCloud.Connection | TiDBCloud.Tx> implements Queryable {
-  readonly flavour = 'mysql'
+  readonly provider = 'mysql'
   constructor(protected client: ClientT) {}
 
   /**
@@ -134,9 +134,5 @@ export class PrismaTiDBCloud extends TiDBCloudQueryable<TiDBCloud.Connection> im
 
     const tx = await this.client.begin()
     return ok(new TiDBCloudTransaction(tx, options))
-  }
-
-  async close() {
-    return ok(undefined)
   }
 }
