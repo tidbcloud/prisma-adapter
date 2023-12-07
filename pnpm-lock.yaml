@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@prisma/driver-adapter-utils':
-    specifier: 5.5.2
-    version: 5.5.2
+    specifier: 5.6.0
+    version: 5.6.0
 
 devDependencies:
   '@tidbcloud/serverless':
@@ -298,8 +298,8 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@prisma/driver-adapter-utils@5.5.2:
-    resolution: {integrity: sha512-lRkxjboGcIl2VkJNomZQ9b6vc2qGFnVwjaR/o3cTPGmmSxETx71cYRYcG/NHKrhvKxI6oKNZ/xzyuzPpg1+kJQ==}
+  /@prisma/driver-adapter-utils@5.6.0:
+    resolution: {integrity: sha512-/TSrfCGLAQghNf+bwg5/e8iKAgecCYU/gMN0IyNra3183/VTQJneLFgbacuSK9bBXiIRUmpbuUIrJ6dhENzfjA==}
     dependencies:
       debug: 4.3.4
     transitivePeerDependencies:
