@@ -1,6 +1,7 @@
 import type TiDBCloud from '@tidbcloud/serverless'
 import { Debug, ok } from '@prisma/driver-adapter-utils'
 import type {
+  ConnectionInfo,
   DriverAdapter,
   ResultSet,
   Query,
@@ -12,6 +13,8 @@ import type {
 import {type TiDBCloudColumnType,fieldToColumnType} from './conversion'
 
 const debug = Debug('prisma:driver-adapter:tidbcloud')
+
+const defaultDatabase = 'test'
 
 class RollbackError extends Error {
   constructor() {
@@ -122,6 +125,14 @@ class TiDBCloudTransaction extends TiDBCloudQueryable<TiDBCloud.Tx> implements T
 export class PrismaTiDBCloud extends TiDBCloudQueryable<TiDBCloud.Connection> implements DriverAdapter {
   constructor(client: TiDBCloud.Connection) {
     super(client)
+  }
+
+  getConnectionInfo(): Result<ConnectionInfo> {
+    const config = this.client.getConfig()
+    const dbName = config.database? config.database : defaultDatabase
+    return ok({
+      schemaName: dbName,
+    })
   }
 
   async startTransaction() {
