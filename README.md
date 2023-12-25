@@ -15,15 +15,14 @@ Before you start, make sure you have:
 You will need to install the `@tidbcloud/prisma-adapter` driver adapter and the `@tidbcloud/serverless` serverless driver.
 
 ```
-npm install @tidbcloud/prisma-adapter
-npm install @tidbcloud/serverless
+npm install @tidbcloud/prisma-adapter @tidbcloud/serverless
 ```
 
 ## DATABASE URL
 
 Set the environment to your .env file in the local environment. You can get connection information on the TiDB Cloud console.
 
-```
+```env
 // .env
 DATABASE_URL="mysql://username:password@host:4000/database?sslaccept=strict"
 ```
@@ -36,22 +35,23 @@ DATABASE_URL="mysql://username:password@host:4000/database?sslaccept=strict"
 
 First, you need to create a Prisma schema file called schema.prisma and define the model. Here we use the user as an example.
 
-```
+```prisma
 // schema.prisma
 generator client {
-provider        = "prisma-client-js"
-previewFeatures = ["driverAdapters"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-provider     = "mysql"
-url          = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
 
 // define model according to your database table
 model user {
-id    Int     @id @default(autoincrement())
-email String? @unique(map: "uniq_email") @db.VarChar(255)
-name  String? @db.VarChar(255)
+  id    Int     @id @default(autoincrement())
+  email String? @unique(map: "uniq_email") @db.VarChar(255)
+  name  String? @db.VarChar(255)
 }
 ```
 
@@ -59,7 +59,7 @@ name  String? @db.VarChar(255)
 
 Here is an example of query:
 
-```
+```js
 // query.js
 import { connect } from '@tidbcloud/serverless';
 import { PrismaTiDBCloud } from '@tidbcloud/prisma-adapter';
@@ -92,7 +92,7 @@ console.log(await prisma.user.findMany())
 
 Here is an example of transaction:
 
-```
+```js
 // query.js
 import { connect } from '@tidbcloud/serverless';
 import { PrismaTiDBCloud } from '@tidbcloud/prisma-adapter';
