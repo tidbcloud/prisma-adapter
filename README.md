@@ -1,6 +1,7 @@
 # @tidbcloud/prisma-adapter
 
-Prisma driver adapter for [TiDB Cloud Serverless Driver](https://github.com/tidbcloud/serverless-js). For more details, see our [doc](https://www.pingcap.com/blog/integrating-tidb-cloud-serverless-driver-prisma-orm/)
+Prisma driver adapter for [TiDB Cloud Serverless Driver](https://github.com/tidbcloud/serverless-js). For more details, see [TiDB Cloud Serverless Driver Prisma Tutorial
+](https://docs.pingcap.com/tidbcloud/serverless-driver-prisma-example).
 
 ## Before you start
 
