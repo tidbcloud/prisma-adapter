@@ -6,13 +6,13 @@ settings:
 
 dependencies:
   '@prisma/driver-adapter-utils':
-    specifier: 5.8.0-dev.15
-    version: 5.8.0-dev.15
+    specifier: 5.8.1
+    version: 5.8.1
 
 devDependencies:
   '@tidbcloud/serverless':
-    specifier: ^0.0.9
-    version: 0.0.9
+    specifier: ^0.0.10
+    version: 0.0.10
   '@types/node':
     specifier: ^20.5.1
     version: 20.5.1
@@ -298,16 +298,16 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@prisma/driver-adapter-utils@5.8.0-dev.15:
-    resolution: {integrity: sha512-H4+QctoR4fbcPrkgwNxCTztzqLm0teWSQ9zMgxUSOizdckfmIakpSNJK7mXZTXPYJWtbyzZS8fr1VVrMBqC7bA==}
+  /@prisma/driver-adapter-utils@5.8.1:
+    resolution: {integrity: sha512-svZPPpNtmVkuQxIMFbMMs1IeihvVZoHfJs/WAxSIPoH8xun5gwoMPxBqCwYzFPM150vU19K/FYvvkDrAfpwelQ==}
     dependencies:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@tidbcloud/serverless@0.0.9:
-    resolution: {integrity: sha512-kymM6nkBLQxUNUN75ESISjsFERd6Bd3L/Uxa1WeMNWpRnlVKcGGCGS6c//wedZvAYgciJaunvBzKL3/drHn8/Q==}
+  /@tidbcloud/serverless@0.0.10:
+    resolution: {integrity: sha512-DmT6dT6VjeCvVmNlBwRPdQK95ZMI/m5z8lOklpS5qZAt8bntx68dihd14faw8JYke4ZQz/vbfoM5svQt7MPoOg==}
     engines: {node: '>=16'}
     dev: true
 

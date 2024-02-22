@@ -145,6 +145,7 @@ try {
 | v5.5.x  | v5.5.x               | ^v0.0.7           |
 | v5.6.x  | v5.6.x               | ^v0.0.7           |
 | v5.7.x  | v5.7.x               | ^v0.0.7           |
+| v5.8.x  | v5.8.x               | ^v0.0.10          |
 
 Here is the step to step guide for how to choose the version:
 1. Choose the Prisma version: Choose the one as you need.
