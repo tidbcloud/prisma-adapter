@@ -35,13 +35,13 @@
     "@prisma/driver-adapter-utils": "5.8.1"
   },
   "devDependencies": {
-    "@tidbcloud/serverless": "^0.0.9",
+    "@tidbcloud/serverless": "^0.0.10",
     "@types/node": "^20.5.1",
     "tsup": "^7.2.0",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
   },
   "peerDependencies": {
-    "@tidbcloud/serverless": ">= 0.0.9"
+    "@tidbcloud/serverless": ">= 0.0.10"
   }
 }

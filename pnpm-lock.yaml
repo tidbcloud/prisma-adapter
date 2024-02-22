@@ -11,8 +11,8 @@ dependencies:
 
 devDependencies:
   '@tidbcloud/serverless':
-    specifier: ^0.0.9
-    version: 0.0.9
+    specifier: ^0.0.10
+    version: 0.0.10
   '@types/node':
     specifier: ^20.5.1
     version: 20.5.1
@@ -306,8 +306,8 @@ packages:
       - supports-color
     dev: false
 
-  /@tidbcloud/serverless@0.0.9:
-    resolution: {integrity: sha512-kymM6nkBLQxUNUN75ESISjsFERd6Bd3L/Uxa1WeMNWpRnlVKcGGCGS6c//wedZvAYgciJaunvBzKL3/drHn8/Q==}
+  /@tidbcloud/serverless@0.0.10:
+    resolution: {integrity: sha512-DmT6dT6VjeCvVmNlBwRPdQK95ZMI/m5z8lOklpS5qZAt8bntx68dihd14faw8JYke4ZQz/vbfoM5svQt7MPoOg==}
     engines: {node: '>=16'}
     dev: true
 
