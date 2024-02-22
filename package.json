@@ -1,6 +1,6 @@
 {
-  "name": "@tidbcloud/prisma-adapter",
-  "version": "5.9.1",
+  "name": "@shiyuhang0/prisma-adapter",
+  "version": "5.10.2-dev1",
   "description": "Prisma's driver adapter for \"@tidbcloud/serverless\"",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -32,16 +32,16 @@
   "license": "Apache-2.0",
   "sideEffects": false,
   "dependencies": {
-    "@prisma/driver-adapter-utils": "5.9.1"
+    "@prisma/driver-adapter-utils": "5.10.2"
   },
   "devDependencies": {
-    "@tidbcloud/serverless": "^0.0.10",
+    "@tidbcloud/serverless": "^0.1.0",
     "@types/node": "^20.5.1",
     "tsup": "^7.2.0",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
   },
   "peerDependencies": {
-    "@tidbcloud/serverless": ">= 0.0.10"
+    "@tidbcloud/serverless": ">= 0.1.0"
   }
 }

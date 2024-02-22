@@ -92,3 +92,22 @@ export function fieldToColumnType(field: TiDBCloudColumnType): ColumnType {
       throw new Error(`Unsupported column type: ${field}`)
   }
 }
+
+// define the decoder because TiDB Cloud serverless driver returns Uint8Array for these type
+export const customerDecoder = {
+  ["BINARY"]: (value: string) => Array.from(hexToUint8Array(value)),
+  ["VARBINARY"]: (value: string) => Array.from(hexToUint8Array(value)),
+  ["BLOB"]: (value: string) => Array.from(hexToUint8Array(value)),
+  ["LONGBLOB"]: (value: string) => Array.from(hexToUint8Array(value)),
+  ["TINYINT"]: (value: string) => Array.from(hexToUint8Array(value)),
+  ["MEDIUMBLOB"]: (value: string) => Array.from(hexToUint8Array(value)),
+  ["BIT"]: (value: string) => Array.from(hexToUint8Array(value)),
+}
+
+function hexToUint8Array(hexString: string): Uint8Array {
+  const uint8Array = new Uint8Array(hexString.length / 2)
+  for (let i = 0; i < hexString.length; i += 2) {
+    uint8Array[i / 2] = parseInt(hexString.substring(i, i + 2), 16)
+  }
+  return uint8Array
+}
