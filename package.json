@@ -1,6 +1,6 @@
 {
-  "name": "@shiyuhang0/prisma-adapter",
-  "version": "5.10.2-dev1",
+  "name": "@tidbcloud/prisma-adapter",
+  "version": "5.10.2",
   "description": "Prisma's driver adapter for \"@tidbcloud/serverless\"",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
