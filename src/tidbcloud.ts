@@ -10,7 +10,7 @@ import type {
   Result,
   TransactionOptions,
 } from '@prisma/driver-adapter-utils'
-import {type TiDBCloudColumnType,fieldToColumnType,customerDecoder} from './conversion'
+import {type TiDBCloudColumnType,fieldToColumnType,customDecoder} from './conversion'
 
 const debug = Debug('prisma:driver-adapter:tidbcloud')
 
@@ -78,7 +78,7 @@ class TiDBCloudQueryable<ClientT extends TiDBCloud.Connection | TiDBCloud.Tx> im
     const { sql, args: values } = query
 
     try {
-      const result =  await this.client.execute(sql, values, {arrayMode: true, fullResult: true,decoders:customerDecoder})
+      const result =  await this.client.execute(sql, values, {arrayMode: true, fullResult: true, decoders:customDecoder})
       return result as TiDBCloud.FullResult
     } catch (e) {
       const error = e as Error

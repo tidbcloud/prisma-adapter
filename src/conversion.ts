@@ -94,7 +94,7 @@ export function fieldToColumnType(field: TiDBCloudColumnType): ColumnType {
 }
 
 // define the decoder because TiDB Cloud serverless driver returns Uint8Array for these type
-export const customerDecoder = {
+export const customDecoder = {
   "BINARY": (value: string) => Array.from(hexToUint8Array(value)),
   "VARBINARY": (value: string) => Array.from(hexToUint8Array(value)),
   "BLOB": (value: string) => Array.from(hexToUint8Array(value)),
