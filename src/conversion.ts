@@ -95,13 +95,13 @@ export function fieldToColumnType(field: TiDBCloudColumnType): ColumnType {
 
 // define the decoder because TiDB Cloud serverless driver returns Uint8Array for these type
 export const customerDecoder = {
-  ["BINARY"]: (value: string) => Array.from(hexToUint8Array(value)),
-  ["VARBINARY"]: (value: string) => Array.from(hexToUint8Array(value)),
-  ["BLOB"]: (value: string) => Array.from(hexToUint8Array(value)),
-  ["LONGBLOB"]: (value: string) => Array.from(hexToUint8Array(value)),
-  ["TINYINT"]: (value: string) => Array.from(hexToUint8Array(value)),
-  ["MEDIUMBLOB"]: (value: string) => Array.from(hexToUint8Array(value)),
-  ["BIT"]: (value: string) => Array.from(hexToUint8Array(value)),
+  "BINARY": (value: string) => Array.from(hexToUint8Array(value)),
+  "VARBINARY": (value: string) => Array.from(hexToUint8Array(value)),
+  "BLOB": (value: string) => Array.from(hexToUint8Array(value)),
+  "LONGBLOB": (value: string) => Array.from(hexToUint8Array(value)),
+  "TINYINT": (value: string) => Array.from(hexToUint8Array(value)),
+  "MEDIUMBLOB": (value: string) => Array.from(hexToUint8Array(value)),
+  "BIT": (value: string) => Array.from(hexToUint8Array(value)),
 }
 
 function hexToUint8Array(hexString: string): Uint8Array {
