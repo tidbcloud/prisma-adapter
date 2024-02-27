@@ -1,5 +1,5 @@
-import type TiDBCloud from '@tidbcloud/serverless'
-import { Debug, ok } from '@prisma/driver-adapter-utils'
+import type TiDBCloud from "@tidbcloud/serverless";
+import { Debug, ok } from "@prisma/driver-adapter-utils";
 import type {
   ConnectionInfo,
   DriverAdapter,
@@ -9,50 +9,58 @@ import type {
   Transaction,
   Result,
   TransactionOptions,
-} from '@prisma/driver-adapter-utils'
-import {type TiDBCloudColumnType,fieldToColumnType} from './conversion'
+} from "@prisma/driver-adapter-utils";
+import {
+  type TiDBCloudColumnType,
+  fieldToColumnType,
+  customDecoder,
+} from "./conversion";
 
-const debug = Debug('prisma:driver-adapter:tidbcloud')
+const debug = Debug("prisma:driver-adapter:tidbcloud");
 
-const defaultDatabase = 'test'
+const defaultDatabase = "test";
 
 class RollbackError extends Error {
   constructor() {
-    super('ROLLBACK')
-    this.name = 'RollbackError'
+    super("ROLLBACK");
+    this.name = "RollbackError";
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, RollbackError)
+      Error.captureStackTrace(this, RollbackError);
     }
   }
 }
 
-class TiDBCloudQueryable<ClientT extends TiDBCloud.Connection | TiDBCloud.Tx> implements Queryable {
-  readonly provider = 'mysql'
+class TiDBCloudQueryable<ClientT extends TiDBCloud.Connection | TiDBCloud.Tx>
+  implements Queryable
+{
+  readonly provider = "mysql";
   constructor(protected client: ClientT) {}
 
   /**
    * Execute a query given as SQL, interpolating the given parameters.
    */
   async queryRaw(query: Query): Promise<Result<ResultSet>> {
-    const tag = '[js::query_raw]'
-    debug(`${tag} %O`, query)
+    const tag = "[js::query_raw]";
+    debug(`${tag} %O`, query);
 
-    const result = await this.performIO(query)
-    const fields = result.types as TiDBCloud.Types
-    const rows = result.rows as TiDBCloud.Row[]
-    const lastInsertId = result.lastInsertId?.toString()
+    const result = await this.performIO(query);
+    const fields = result.types as TiDBCloud.Types;
+    const rows = result.rows as TiDBCloud.Row[];
+    const lastInsertId = result.lastInsertId?.toString();
 
-    const columnNames = Object.keys(fields) as string[]
-    const columnRawTypes =  Object.values(fields) as string[]
+    const columnNames = Object.keys(fields) as string[];
+    const columnRawTypes = Object.values(fields) as string[];
 
     const resultSet: ResultSet = {
       columnNames,
-      columnTypes: columnRawTypes.map((field) => fieldToColumnType(field as TiDBCloudColumnType)),
-      rows: rows as ResultSet['rows'],
-      lastInsertId
-    }
-    return ok(resultSet)
+      columnTypes: columnRawTypes.map((field) =>
+        fieldToColumnType(field as TiDBCloudColumnType)
+      ),
+      rows: rows as ResultSet["rows"],
+      lastInsertId,
+    };
+    return ok(resultSet);
   }
 
   /**
@@ -61,12 +69,12 @@ class TiDBCloudQueryable<ClientT extends TiDBCloud.Connection | TiDBCloud.Tx> im
    * Note: Queryable expects a u64, but napi.rs only supports u32.
    */
   async executeRaw(query: Query): Promise<Result<number>> {
-    const tag = '[js::execute_raw]'
-    debug(`${tag} %O`, query)
+    const tag = "[js::execute_raw]";
+    debug(`${tag} %O`, query);
 
-    const result = await this.performIO(query)
-    const rowsAffected = result.rowsAffected as number
-    return ok(rowsAffected)
+    const result = await this.performIO(query);
+    const rowsAffected = result.rowsAffected as number;
+    return ok(rowsAffected);
   }
 
   /**
@@ -75,75 +83,82 @@ class TiDBCloudQueryable<ClientT extends TiDBCloud.Connection | TiDBCloud.Tx> im
    * marked as unhealthy.
    */
   private async performIO(query: Query) {
-    const { sql, args: values } = query
+    const { sql, args: values } = query;
 
     try {
-      const result =  await this.client.execute(sql, values, {arrayMode: true, fullResult: true})
-      return result as TiDBCloud.FullResult
+      const result = await this.client.execute(sql, values, {
+        arrayMode: true,
+        fullResult: true,
+        decoders: customDecoder,
+      });
+      return result as TiDBCloud.FullResult;
     } catch (e) {
-      const error = e as Error
-      debug('Error in performIO: %O', error)
-      throw error
+      const error = e as Error;
+      debug("Error in performIO: %O", error);
+      throw error;
     }
   }
 }
 
-class TiDBCloudTransaction extends TiDBCloudQueryable<TiDBCloud.Tx> implements Transaction {
-  finished = false
+class TiDBCloudTransaction
+  extends TiDBCloudQueryable<TiDBCloud.Tx>
+  implements Transaction
+{
+  finished = false;
 
-  constructor(
-    tx: TiDBCloud.Tx,
-    readonly options: TransactionOptions,
-  ) {
-    super(tx)
+  constructor(tx: TiDBCloud.Tx, readonly options: TransactionOptions) {
+    super(tx);
   }
 
   async commit(): Promise<Result<void>> {
-    debug(`[js::commit]`)
+    debug(`[js::commit]`);
 
-    this.finished = true
-    await this.client.commit()
-    return Promise.resolve(ok(undefined))
+    this.finished = true;
+    await this.client.commit();
+    return Promise.resolve(ok(undefined));
   }
 
   async rollback(): Promise<Result<void>> {
-    debug(`[js::rollback]`)
+    debug(`[js::rollback]`);
 
-    this.finished = true
-    await this.client.rollback()
-    return Promise.resolve(ok(undefined))
+    this.finished = true;
+    await this.client.rollback();
+    return Promise.resolve(ok(undefined));
   }
 
   dispose(): Result<void> {
     if (!this.finished) {
-      this.rollback().catch(console.error)
+      this.rollback().catch(console.error);
     }
-    return ok(undefined)
+    return ok(undefined);
   }
 }
 
-export class PrismaTiDBCloud extends TiDBCloudQueryable<TiDBCloud.Connection> implements DriverAdapter {
+export class PrismaTiDBCloud
+  extends TiDBCloudQueryable<TiDBCloud.Connection>
+  implements DriverAdapter
+{
   constructor(client: TiDBCloud.Connection) {
-    super(client)
+    super(client);
   }
 
   getConnectionInfo(): Result<ConnectionInfo> {
-    const config = this.client.getConfig()
-    const dbName = config.database? config.database : defaultDatabase
+    const config = this.client.getConfig();
+    const dbName = config.database ? config.database : defaultDatabase;
     return ok({
       schemaName: dbName,
-    })
+    });
   }
 
   async startTransaction() {
     const options: TransactionOptions = {
       usePhantomQuery: true,
-    }
+    };
 
-    const tag = '[js::startTransaction]'
-    debug(`${tag} options: %O`, options)
+    const tag = "[js::startTransaction]";
+    debug(`${tag} options: %O`, options);
 
-    const tx = await this.client.begin()
-    return ok(new TiDBCloudTransaction(tx, options))
+    const tx = await this.client.begin();
+    return ok(new TiDBCloudTransaction(tx, options));
   }
 }

@@ -25,3 +25,5 @@ jobs:
         run: pnpm lint
       - name: build
         run: pnpm build
+      - name: fmt
+        run: pnpm fmt-check
