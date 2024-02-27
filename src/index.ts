@@ -1,1 +1,1 @@
-export { PrismaTiDBCloud } from './tidbcloud'
+export { PrismaTiDBCloud } from "./tidbcloud";

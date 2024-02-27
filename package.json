@@ -7,7 +7,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup ./src/index.ts --format cjs,esm --dts",
-    "lint": "tsc -p ./tsconfig.build.json"
+    "lint": "tsc -p ./tsconfig.build.json",
+    "fmt": "prettier --write ./src",
+    "fmt-check": "prettier --check ./src"
   },
   "files": [
     "dist",
@@ -39,7 +41,8 @@
     "@types/node": "^20.5.1",
     "tsup": "^7.2.0",
     "tsx": "^3.12.7",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "prettier": "^2.7.1"
   },
   "peerDependencies": {
     "@tidbcloud/serverless": ">= 0.1.0"
