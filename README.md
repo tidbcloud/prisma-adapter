@@ -141,11 +141,13 @@ try {
 
 | Adapter | Prisma/Prisma Client | serverless driver |
 |---------|----------------------|-------------------|
-| v5.4.x  | v5.4.x               | ^v0.0.6           |
-| v5.5.x  | v5.5.x               | ^v0.0.7           |
-| v5.6.x  | v5.6.x               | ^v0.0.7           |
-| v5.7.x  | v5.7.x               | ^v0.0.7           |
-| v5.8.x  | v5.8.x               | ^v0.0.10          |
+| v5.4.x  | v5.4.x               | [v0.0.6, v0.1.0)  |
+| v5.5.x  | v5.5.x               | [v0.0.7, v0.1.0)  |
+| v5.6.x  | v5.6.x               | [v0.0.7, v0.1.0)  |
+| v5.7.x  | v5.7.x               | [v0.0.7, v0.1.0)  |
+| v5.8.x  | v5.8.x               | [v0.0.9, v0.1.0)  |
+| v5.9.x  | v5.9.x               | [v0.0.9, v0.1.0)  |
+| v5.10.x | v5.10.x              | \>= v0.1.0        |
 
 Here is the step to step guide for how to choose the version:
 1. Choose the Prisma version: Choose the one as you need.
