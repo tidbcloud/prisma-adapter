@@ -33,7 +33,9 @@ export type TiDBCloudColumnType =
   | "DATETIME"
   | "TIMESTAMP"
   | "JSON"
-  | "BIT";
+  | "BIT"
+  | "SET"
+  | "ENUM";
 
 /**
  * This is a simplification of quaint's value inference logic. Take a look at quaint's conversion.rs
@@ -85,6 +87,10 @@ export function fieldToColumnType(field: TiDBCloudColumnType): ColumnType {
     case "VARBINARY":
     case "BIT":
       return ColumnTypeEnum.Bytes;
+    case "SET":
+      return ColumnTypeEnum.Set;
+    case "ENUM":
+      return ColumnTypeEnum.Enum;
     case "NULL":
       // Fall back to Int32 for consistency with quaint.
       return ColumnTypeEnum.Int32;
