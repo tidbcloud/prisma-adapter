@@ -148,10 +148,12 @@ try {
 | v5.8.x  | v5.8.x               | [v0.0.9, v0.1.0)  |
 | v5.9.x  | v5.9.x               | [v0.0.9, v0.1.0)  |
 | v5.10.x | v5.10.x              | \>= v0.1.0        |
+| v5.11.x | v5.11.x              | \>= v0.1.0        |
+
 
 Here is the step to step guide for how to choose the version:
 1. Choose the Prisma version: Choose the one as you need.
-2. Choose the adapter version: If you are using Prisma vx.y.z, you should choose the same version of adapter. If there is no adapter version for your Prisma version, you can choose the latest adapter version in vx.y. Open an issue once you find the adapter version is not compatible with Prisma version.
+2. Choose the adapter version: If you are using Prisma vx.y.z, you can choose the latest adapter version in vx.y. Open an issue once you find the adapter version is not compatible with Prisma version.
 3. Choose the serverless driver version: You can always use the latest version according to the table above.
 
 ## Limitations
