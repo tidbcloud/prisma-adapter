@@ -105,7 +105,7 @@ export const customDecoder = {
   VARBINARY: (value: string) => Array.from(hexToUint8Array(value)),
   BLOB: (value: string) => Array.from(hexToUint8Array(value)),
   LONGBLOB: (value: string) => Array.from(hexToUint8Array(value)),
-  TINYINT: (value: string) => Array.from(hexToUint8Array(value)),
+  TINYBLOB: (value: string) => Array.from(hexToUint8Array(value)),
   MEDIUMBLOB: (value: string) => Array.from(hexToUint8Array(value)),
   BIT: (value: string) => Array.from(hexToUint8Array(value)),
 };
