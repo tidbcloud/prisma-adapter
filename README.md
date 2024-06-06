@@ -149,6 +149,7 @@ try {
 | v5.9.x  | v5.9.x               | [v0.0.9, v0.1.0)  |
 | v5.10.x | v5.10.x              | \>= v0.1.0        |
 | v5.11.x | v5.11.x              | \>= v0.1.0        |
+| v5.12.x | v5.12.x              | \>= v0.1.0        |
 
 
 Here is the step to step guide for how to choose the version:
