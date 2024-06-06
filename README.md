@@ -151,6 +151,7 @@ try {
 | v5.11.x | v5.11.x              | \>= v0.1.0        |
 | v5.12.x | v5.12.x              | \>= v0.1.0        |
 | v5.13.x | v5.13.x              | \>= v0.1.0        |
+| v5.14.x | v5.14.x              | \>= v0.1.0        |
 
 
 Here is the step to step guide for how to choose the version:
