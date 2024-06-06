@@ -15,7 +15,7 @@ import {
   fieldToColumnType,
   customDecoder,
 } from "./conversion";
-import { name as packageName } from '../package.json'
+import { name as packageName } from "../package.json";
 
 const debug = Debug("prisma:driver-adapter:tidbcloud");
 
