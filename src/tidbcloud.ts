@@ -15,6 +15,7 @@ import {
   fieldToColumnType,
   customDecoder,
 } from "./conversion";
+import { name as packageName } from '../package.json'
 
 const debug = Debug("prisma:driver-adapter:tidbcloud");
 
@@ -35,6 +36,7 @@ class TiDBCloudQueryable<ClientT extends TiDBCloud.Connection | TiDBCloud.Tx>
   implements Queryable
 {
   readonly provider = "mysql";
+  readonly adapterName = packageName;
   constructor(protected client: ClientT) {}
 
   /**
