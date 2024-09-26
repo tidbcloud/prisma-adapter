@@ -8,6 +8,7 @@ import type {
   Queryable,
   Transaction,
   Result,
+  TransactionContext,
   TransactionOptions,
 } from "@prisma/driver-adapter-utils";
 import {
@@ -136,6 +137,27 @@ class TiDBCloudTransaction
   }
 }
 
+class TiDBCloudTransactionContext
+  extends TiDBCloudQueryable<TiDBCloud.Connection>
+  implements TransactionContext
+{
+  constructor(connect: TiDBCloud.Connection) {
+    super(connect);
+  }
+
+  async startTransaction(): Promise<Result<Transaction>> {
+    const options: TransactionOptions = {
+      usePhantomQuery: true,
+    };
+
+    const tag = "[js::startTransaction]";
+    debug("%s option: %O", tag, options);
+
+    const tx = await this.client.begin();
+    return ok(new TiDBCloudTransaction(tx, options));
+  }
+}
+
 export class PrismaTiDBCloud
   extends TiDBCloudQueryable<TiDBCloud.Connection>
   implements DriverAdapter
@@ -152,15 +174,7 @@ export class PrismaTiDBCloud
     });
   }
 
-  async startTransaction() {
-    const options: TransactionOptions = {
-      usePhantomQuery: true,
-    };
-
-    const tag = "[js::startTransaction]";
-    debug(`${tag} options: %O`, options);
-
-    const tx = await this.client.begin();
-    return ok(new TiDBCloudTransaction(tx, options));
+  async transactionContext(): Promise<Result<TransactionContext>> {
+    return ok(new TiDBCloudTransactionContext(this.client));
   }
 }
