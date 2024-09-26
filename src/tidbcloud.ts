@@ -137,21 +137,24 @@ class TiDBCloudTransaction
   }
 }
 
-class TiDBCloudTransactionContext extends TiDBCloudQueryable<TiDBCloud.Connection> implements TransactionContext {
+class TiDBCloudTransactionContext
+  extends TiDBCloudQueryable<TiDBCloud.Connection>
+  implements TransactionContext
+{
   constructor(connect: TiDBCloud.Connection) {
-    super(connect)
+    super(connect);
   }
 
   async startTransaction(): Promise<Result<Transaction>> {
     const options: TransactionOptions = {
       usePhantomQuery: false,
-    }
+    };
 
-    const tag = '[js::startTransaction]'
-    debug('%s option: %O', tag, options)
+    const tag = "[js::startTransaction]";
+    debug("%s option: %O", tag, options);
 
-    const tx = await this.client.begin()
-    return ok(new TiDBCloudTransaction(tx, options))
+    const tx = await this.client.begin();
+    return ok(new TiDBCloudTransaction(tx, options));
   }
 }
 
@@ -172,6 +175,6 @@ export class PrismaTiDBCloud
   }
 
   async transactionContext(): Promise<Result<TransactionContext>> {
-    return ok(new TiDBCloudTransactionContext(this.client))
+    return ok(new TiDBCloudTransactionContext(this.client));
   }
 }
