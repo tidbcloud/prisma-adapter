@@ -147,7 +147,7 @@ class TiDBCloudTransactionContext
 
   async startTransaction(): Promise<Result<Transaction>> {
     const options: TransactionOptions = {
-      usePhantomQuery: false,
+      usePhantomQuery: true,
     };
 
     const tag = "[js::startTransaction]";
