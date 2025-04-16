@@ -62,7 +62,6 @@ Here is an example of query:
 
 ```js
 // query.js
-import { connect } from '@tidbcloud/serverless';
 import { PrismaTiDBCloud } from '@tidbcloud/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv';
@@ -72,8 +71,7 @@ dotenv.config();
 const connectionString = `${process.env.DATABASE_URL}`;
 
 // init prisma client
-const connection = connect({ url: connectionString });
-const adapter = new PrismaTiDBCloud(connection);
+const adapter = new PrismaTiDBCloud({url: connectionString});
 const prisma = new PrismaClient({ adapter });
 
 // insert
@@ -95,7 +93,6 @@ Here is an example of transaction:
 
 ```js
 // query.js
-import { connect } from '@tidbcloud/serverless';
 import { PrismaTiDBCloud } from '@tidbcloud/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv';
@@ -105,8 +102,7 @@ dotenv.config();
 const connectionString = `${process.env.DATABASE_URL}`;
 
 // init prisma client
-const connection = connect({ url: connectionString });
-const adapter = new PrismaTiDBCloud(connection);
+const adapter = new PrismaTiDBCloud({url: connectionString});
 const prisma = new PrismaClient({ adapter });
 
 const createUser1 = prisma.user.create({
@@ -154,6 +150,7 @@ try {
 | v5.14.x | v5.14.x              | \>= v0.1.0        |
 | v5.15.x | v5.15.x              | \>= v0.1.0        |
 | v5.20.x | v5.20.x              | \>= v0.1.0        |
+| v6.6.x  | v6.6.x               | \>= v0.1.0        |
 
 Here is the step to step guide for how to choose the version:
 1. Choose the Prisma version: Choose the one as you need.
