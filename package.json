@@ -41,7 +41,7 @@
     "@types/node": "^20.5.1",
     "dotenv": "^16.5.0",
     "prettier": "^2.7.1",
-    "prisma": "6.6.0",
+    "prisma": "6.4.0",
     "tsup": "^7.2.0",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
