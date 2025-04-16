@@ -137,13 +137,16 @@ class TiDBCloudTransaction
   }
 }
 
-export class PrismaTiDBCloudAdapter extends TiDBCloudQueryable<TiDBCloud.Connection> implements SqlDriverAdapter {
+export class PrismaTiDBCloudAdapter
+  extends TiDBCloudQueryable<TiDBCloud.Connection>
+  implements SqlDriverAdapter
+{
   constructor(connect: TiDBCloud.Connection) {
     super(connect);
   }
 
   executeScript(_script: string): Promise<void> {
-    throw new Error('Not implemented yet')
+    throw new Error("Not implemented yet");
   }
 
   getConnectionInfo(): ConnectionInfo {
@@ -154,7 +157,9 @@ export class PrismaTiDBCloudAdapter extends TiDBCloudQueryable<TiDBCloud.Connect
     };
   }
 
-  async startTransaction(isolationLevel?: IsolationLevel): Promise<Transaction> {
+  async startTransaction(
+    isolationLevel?: IsolationLevel
+  ): Promise<Transaction> {
     const options: TransactionOptions = {
       usePhantomQuery: true,
     };
@@ -169,14 +174,15 @@ export class PrismaTiDBCloudAdapter extends TiDBCloudQueryable<TiDBCloud.Connect
   async dispose(): Promise<void> {}
 }
 
+export class PrismaPlanetScaleAdapterFactory
+  implements SqlDriverAdapterFactory
+{
+  readonly provider = "mysql";
+  readonly adapterName = packageName;
 
-export class PrismaPlanetScaleAdapterFactory implements SqlDriverAdapterFactory {
-  readonly provider = 'mysql'
-  readonly adapterName = packageName
-
- constructor(private readonly config: TiDBCloud.Config) {}
+  constructor(private readonly config: TiDBCloud.Config) {}
 
   async connect(): Promise<SqlDriverAdapter> {
-    return new PrismaTiDBCloudAdapter(new TiDBCloud.Connection(this.config))
+    return new PrismaTiDBCloudAdapter(new TiDBCloud.Connection(this.config));
   }
 }
