@@ -12,3 +12,7 @@
 2. Run `npx prisma db push` to push the schema to the database
 3. Run `npx prisma generate` to generate the Prisma client
 4. Run `node test.js` to run the integration test
+
+### Clean the environment
+
+the @prisma/client dependency will be added during the integration test, so you need to remove it after the test is done.
