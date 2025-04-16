@@ -1,7 +1,7 @@
 # How to run the integration test
 
 ### prepare the environment
-1. full in the `DATABASE_URL` in the `.env` file
+1. full in the `DATABASE_URL` in the `.env` file: `DATABASE_URL='mysql://[username]:[password]@[host]:4000/[database]?sslaccept=strict'`
 2. Alter the prisma version, @tidbcloud/serverless and @prisma/driver-adapter-utils as you need in the `package.json` file
 3. Run `pnpm install` to install the dependencies
 4. Run `npm run build` to build the prisma-adapter
@@ -16,3 +16,9 @@
 ### Clean the environment
 
 the @prisma/client dependency will be added during the integration test, so you need to remove it after the test is done.
+
+# Test version
+
+As prisma has break change, the test is different too.
+- test-old.js: prisma <= 6.4.0
+- test.js: prisma >= 6.6.0
