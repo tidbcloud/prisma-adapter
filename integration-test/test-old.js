@@ -1,7 +1,7 @@
-import { connect } from '@tidbcloud/serverless';
-import { PrismaTiDBCloud } from '../dist/index.mjs';
-import { PrismaClient } from '@prisma/client';
-import dotenv from 'dotenv';
+import { connect } from "@tidbcloud/serverless";
+import { PrismaTiDBCloud } from "../dist/index.mjs";
+import { PrismaClient } from "@prisma/client";
+import dotenv from "dotenv";
 
 // setup
 dotenv.config();
@@ -12,13 +12,14 @@ const connection = connect({ url: connectionString });
 const adapter = new PrismaTiDBCloud(connection);
 const prisma = new PrismaClient({ adapter });
 
-// Insert
-const user = await prisma.user.create({
-    data: {
-      email: 'test@pingcap.com',
-      name: 'test',
-    },
-  })
-  
 // Query
-console.log(await prisma.user.findMany())
+console.log(await prisma.user.findMany());
+
+async function testInsert() {
+  const user = await prisma.user.create({
+    data: {
+      email: "test@pingcap.com",
+      name: "test",
+    },
+  });
+}
