@@ -23,3 +23,37 @@ async function testInsert() {
     },
   });
 }
+
+async function testTx() {
+  const createUser1 = prisma.user.create({
+    data: {
+      email: "test1@pingcap.com",
+      name: "test1",
+    },
+  });
+  const createUser2 = prisma.user.create({
+    data: {
+      email: "test1@pingcap.com",
+      name: "test1",
+    },
+  });
+
+  const createUser3 = prisma.user.create({
+    data: {
+      email: "test2@pingcap.com",
+      name: "test2",
+    },
+  });
+
+  try {
+    await prisma.$transaction([createUser1, createUser2]); // Operations fail because the email address is duplicated
+  } catch (e) {
+    console.log(e);
+  }
+
+  try {
+    await prisma.$transaction([createUser2, createUser3]); // Operations success because the email address is unique
+  } catch (e) {
+    console.log(e);
+  }
+}
