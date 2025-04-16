@@ -13,13 +13,12 @@ const adapter = new PrismaTiDBCloud(connection);
 const prisma = new PrismaClient({ adapter });
 
 // Insert
-// const user = await prisma.user.create({
-//     data: {
-//       email: 'test@pingcap.com',
-//       name: 'test',
-//     },
-//   })
-// console.log(user)
+const user = await prisma.user.create({
+    data: {
+      email: 'test@pingcap.com',
+      name: 'test',
+    },
+  })
   
 // Query
 console.log(await prisma.user.findMany())
