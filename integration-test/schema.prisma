@@ -1,0 +1,15 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+}
+
+model user {
+  id    Int     @id @default(autoincrement())
+  email String? @unique(map: "uniq_email") @db.VarChar(255)
+  name  String? @db.VarChar(255)
+}
