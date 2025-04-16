@@ -1,1 +1,1 @@
-export { PrismaPlanetScaleAdapterFactory as PrismaTiDBCloud } from "./tidbcloud";
+export { PrismaTiDBCloudAdapterFactory as PrismaTiDBCloud } from "./tidbcloud";
