@@ -17,10 +17,3 @@
 ### Clean the environment
 
 the @prisma/client dependency will be added during the integration test, so you need to remove it after the test is done.
-
-# Test version
-
-As prisma has break change, the test is different too.
-
-- test-old.js: prisma <= 6.4.0
-- test.js: prisma >= 6.6.0

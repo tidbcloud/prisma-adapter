@@ -1,3 +1,5 @@
+// This test is used to test the PrismaTiDBCloud adapter >= 6.6.0
+
 import { PrismaTiDBCloud } from "../dist/index.mjs";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
