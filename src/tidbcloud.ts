@@ -174,9 +174,7 @@ export class PrismaTiDBCloudAdapter
   async dispose(): Promise<void> {}
 }
 
-export class PrismaTiDBCloudAdapterFactory
-  implements SqlDriverAdapterFactory
-{
+export class PrismaTiDBCloudAdapterFactory implements SqlDriverAdapterFactory {
   readonly provider = "mysql";
   readonly adapterName = packageName;
 

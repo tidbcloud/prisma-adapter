@@ -9,7 +9,7 @@ dotenv.config();
 const connectionString = `${process.env.DATABASE_URL}`;
 
 // Initialize Prisma Client
-const adapter = new PrismaTiDBCloud({url: connectionString});
+const adapter = new PrismaTiDBCloud({ url: connectionString });
 const prisma = new PrismaClient({ adapter });
 
 // Query
