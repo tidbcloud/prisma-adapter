@@ -1,1 +1,1 @@
-export { PrismaTiDBCloud } from "./tidbcloud";
+export { PrismaTiDBCloudAdapterFactory as PrismaTiDBCloud } from "./tidbcloud";

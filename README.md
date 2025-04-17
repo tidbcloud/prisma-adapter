@@ -62,7 +62,6 @@ Here is an example of query:
 
 ```js
 // query.js
-import { connect } from '@tidbcloud/serverless';
 import { PrismaTiDBCloud } from '@tidbcloud/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv';
@@ -72,8 +71,7 @@ dotenv.config();
 const connectionString = `${process.env.DATABASE_URL}`;
 
 // init prisma client
-const connection = connect({ url: connectionString });
-const adapter = new PrismaTiDBCloud(connection);
+const adapter = new PrismaTiDBCloud({url: connectionString});
 const prisma = new PrismaClient({ adapter });
 
 // insert
@@ -95,7 +93,6 @@ Here is an example of transaction:
 
 ```js
 // query.js
-import { connect } from '@tidbcloud/serverless';
 import { PrismaTiDBCloud } from '@tidbcloud/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv';
@@ -105,8 +102,7 @@ dotenv.config();
 const connectionString = `${process.env.DATABASE_URL}`;
 
 // init prisma client
-const connection = connect({ url: connectionString });
-const adapter = new PrismaTiDBCloud(connection);
+const adapter = new PrismaTiDBCloud({url: connectionString});
 const prisma = new PrismaClient({ adapter });
 
 const createUser1 = prisma.user.create({
@@ -133,7 +129,7 @@ try {
   await prisma.$transaction([createUser1, createUser2]) // Operations fail together
 } catch (e) {
   console.log(e)
-  await prisma.$transaction([createUser1, createUser3]) // Operations succeed together
+  await prisma.$transaction([createUser1, createUser3], isolationLevel: "READ COMMITTED") // Operations succeed together
 }
 ```
 
@@ -154,12 +150,9 @@ try {
 | v5.14.x | v5.14.x              | \>= v0.1.0        |
 | v5.15.x | v5.15.x              | \>= v0.1.0        |
 | v5.20.x | v5.20.x              | \>= v0.1.0        |
+| v6.6.x  | v6.6.x               | \>= v0.1.0        |
 
 Here is the step to step guide for how to choose the version:
 1. Choose the Prisma version: Choose the one as you need.
 2. Choose the adapter version: If you are using Prisma vx.y.z, you can choose the latest adapter version in vx.y. Open an issue once you find the adapter version is not compatible with Prisma version.
 3. Choose the serverless driver version: You can always use the latest version according to the table above.
-
-## Limitations
-
-- [Set isolation level](https://www.prisma.io/docs/concepts/components/prisma-client/transactions#transaction-isolation-level) is not supported yet.

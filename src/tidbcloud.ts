@@ -1,15 +1,15 @@
-import type TiDBCloud from "@tidbcloud/serverless";
+import * as TiDBCloud from "@tidbcloud/serverless";
 import { Debug, ok } from "@prisma/driver-adapter-utils";
 import type {
   ConnectionInfo,
-  DriverAdapter,
-  ResultSet,
-  Query,
-  Queryable,
+  SqlQuery,
+  SqlResultSet,
+  SqlQueryable,
   Transaction,
-  Result,
-  TransactionContext,
   TransactionOptions,
+  IsolationLevel,
+  SqlDriverAdapter,
+  SqlDriverAdapterFactory,
 } from "@prisma/driver-adapter-utils";
 import {
   type TiDBCloudColumnType,
@@ -34,7 +34,7 @@ class RollbackError extends Error {
 }
 
 class TiDBCloudQueryable<ClientT extends TiDBCloud.Connection | TiDBCloud.Tx>
-  implements Queryable
+  implements SqlQueryable
 {
   readonly provider = "mysql";
   readonly adapterName = packageName;
@@ -43,7 +43,7 @@ class TiDBCloudQueryable<ClientT extends TiDBCloud.Connection | TiDBCloud.Tx>
   /**
    * Execute a query given as SQL, interpolating the given parameters.
    */
-  async queryRaw(query: Query): Promise<Result<ResultSet>> {
+  async queryRaw(query: SqlQuery): Promise<SqlResultSet> {
     const tag = "[js::query_raw]";
     debug(`${tag} %O`, query);
 
@@ -55,15 +55,15 @@ class TiDBCloudQueryable<ClientT extends TiDBCloud.Connection | TiDBCloud.Tx>
     const columnNames = Object.keys(fields) as string[];
     const columnRawTypes = Object.values(fields) as string[];
 
-    const resultSet: ResultSet = {
+    const resultSet: SqlResultSet = {
       columnNames,
       columnTypes: columnRawTypes.map((field) =>
         fieldToColumnType(field as TiDBCloudColumnType)
       ),
-      rows: rows as ResultSet["rows"],
+      rows: rows as SqlResultSet["rows"],
       lastInsertId,
     };
-    return ok(resultSet);
+    return resultSet;
   }
 
   /**
@@ -71,13 +71,13 @@ class TiDBCloudQueryable<ClientT extends TiDBCloud.Connection | TiDBCloud.Tx>
    * returning the number of affected rows.
    * Note: Queryable expects a u64, but napi.rs only supports u32.
    */
-  async executeRaw(query: Query): Promise<Result<number>> {
+  async executeRaw(query: SqlQuery): Promise<number> {
     const tag = "[js::execute_raw]";
     debug(`${tag} %O`, query);
 
     const result = await this.performIO(query);
     const rowsAffected = result.rowsAffected as number;
-    return ok(rowsAffected);
+    return rowsAffected;
   }
 
   /**
@@ -85,7 +85,7 @@ class TiDBCloudQueryable<ClientT extends TiDBCloud.Connection | TiDBCloud.Tx>
    * Should the query fail due to a connection error, the connection is
    * marked as unhealthy.
    */
-  private async performIO(query: Query) {
+  private async performIO(query: SqlQuery) {
     const { sql, args: values } = query;
 
     try {
@@ -113,39 +113,53 @@ class TiDBCloudTransaction
     super(tx);
   }
 
-  async commit(): Promise<Result<void>> {
+  async commit(): Promise<void> {
     debug(`[js::commit]`);
 
     this.finished = true;
     await this.client.commit();
-    return Promise.resolve(ok(undefined));
+    return Promise.resolve(undefined);
   }
 
-  async rollback(): Promise<Result<void>> {
+  async rollback(): Promise<void> {
     debug(`[js::rollback]`);
 
     this.finished = true;
     await this.client.rollback();
-    return Promise.resolve(ok(undefined));
+    return Promise.resolve(undefined);
   }
 
-  dispose(): Result<void> {
+  dispose(): void {
     if (!this.finished) {
       this.rollback().catch(console.error);
     }
-    return ok(undefined);
+    return undefined;
   }
 }
 
-class TiDBCloudTransactionContext
+export class PrismaTiDBCloudAdapter
   extends TiDBCloudQueryable<TiDBCloud.Connection>
-  implements TransactionContext
+  implements SqlDriverAdapter
 {
   constructor(connect: TiDBCloud.Connection) {
     super(connect);
   }
 
-  async startTransaction(): Promise<Result<Transaction>> {
+  executeScript(_script: string): Promise<void> {
+    throw new Error("Not implemented yet");
+  }
+
+  getConnectionInfo(): ConnectionInfo {
+    const config = this.client.getConfig();
+    const dbName = config.database ? config.database : defaultDatabase;
+    return {
+      schemaName: dbName,
+    };
+  }
+
+  async startTransaction(
+    isolationLevel?: IsolationLevel
+  ): Promise<Transaction> {
     const options: TransactionOptions = {
       usePhantomQuery: true,
     };
@@ -153,28 +167,32 @@ class TiDBCloudTransactionContext
     const tag = "[js::startTransaction]";
     debug("%s option: %O", tag, options);
 
-    const tx = await this.client.begin();
-    return ok(new TiDBCloudTransaction(tx, options));
+    const supportedLevels = ["READ COMMITTED", "REPEATABLE READ"];
+    if (isolationLevel && !supportedLevels.includes(isolationLevel)) {
+      throw new Error(
+        `TiDBCloud prisma-adapter does not support the isolation level ${isolationLevel}`
+      );
+    }
+
+    const tx = await this.client.begin({
+      isolation: isolationLevel as
+        | "READ COMMITTED"
+        | "REPEATABLE READ"
+        | undefined,
+    });
+    return new TiDBCloudTransaction(tx, options);
   }
+
+  async dispose(): Promise<void> {}
 }
 
-export class PrismaTiDBCloud
-  extends TiDBCloudQueryable<TiDBCloud.Connection>
-  implements DriverAdapter
-{
-  constructor(client: TiDBCloud.Connection) {
-    super(client);
-  }
+export class PrismaTiDBCloudAdapterFactory implements SqlDriverAdapterFactory {
+  readonly provider = "mysql";
+  readonly adapterName = packageName;
 
-  getConnectionInfo(): Result<ConnectionInfo> {
-    const config = this.client.getConfig();
-    const dbName = config.database ? config.database : defaultDatabase;
-    return ok({
-      schemaName: dbName,
-    });
-  }
+  constructor(private readonly config: TiDBCloud.Config) {}
 
-  async transactionContext(): Promise<Result<TransactionContext>> {
-    return ok(new TiDBCloudTransactionContext(this.client));
+  async connect(): Promise<SqlDriverAdapter> {
+    return new PrismaTiDBCloudAdapter(new TiDBCloud.Connection(this.config));
   }
 }
