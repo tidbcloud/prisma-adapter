@@ -167,7 +167,19 @@ export class PrismaTiDBCloudAdapter
     const tag = "[js::startTransaction]";
     debug("%s option: %O", tag, options);
 
-    const tx = await this.client.begin();
+    const supportedLevels = ["READ COMMITTED", "REPEATABLE READ"];
+    if (isolationLevel && !supportedLevels.includes(isolationLevel)) {
+      throw new Error(
+        `TiDBCloud prisma-adapter does not support the isolation level ${isolationLevel}`
+      );
+    }
+
+    const tx = await this.client.begin({
+      isolation: isolationLevel as
+        | "READ COMMITTED"
+        | "REPEATABLE READ"
+        | undefined,
+    });
     return new TiDBCloudTransaction(tx, options);
   }
 

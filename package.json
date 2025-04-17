@@ -9,7 +9,7 @@
     "build": "tsup ./src/index.ts --format cjs,esm --dts",
     "lint": "tsc -p ./tsconfig.build.json",
     "fmt": "prettier --write ./src ./integration-test",
-    "fmt-check": "prettier --check ./src ./integration-tes"
+    "fmt-check": "prettier --check ./src ./integration-test"
   },
   "files": [
     "dist",

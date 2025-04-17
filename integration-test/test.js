@@ -16,6 +16,13 @@ const prisma = new PrismaClient({ adapter });
 console.log(await prisma.user.findMany());
 
 async function testInsert() {
+  await prisma.user.deleteMany({
+    where: {
+      email: {
+        contains: "pingcap.com",
+      },
+    },
+  });
   const user = await prisma.user.create({
     data: {
       email: "test@pingcap.com",
@@ -25,6 +32,13 @@ async function testInsert() {
 }
 
 async function testTx() {
+  await prisma.user.deleteMany({
+    where: {
+      email: {
+        contains: "pingcap.com",
+      },
+    },
+  });
   const createUser1 = prisma.user.create({
     data: {
       email: "test1@pingcap.com",
@@ -52,7 +66,9 @@ async function testTx() {
   }
 
   try {
-    await prisma.$transaction([createUser2, createUser3]); // Operations success because the email address is unique
+    await prisma.$transaction([createUser2, createUser3], {
+      isolationLevel: "READ COMMITTED",
+    }); // Operations success because the email address is unique
   } catch (e) {
     console.log(e);
   }

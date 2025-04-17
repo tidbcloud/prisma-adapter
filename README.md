@@ -129,7 +129,7 @@ try {
   await prisma.$transaction([createUser1, createUser2]) // Operations fail together
 } catch (e) {
   console.log(e)
-  await prisma.$transaction([createUser1, createUser3]) // Operations succeed together
+  await prisma.$transaction([createUser1, createUser3], isolationLevel: "READ COMMITTED") // Operations succeed together
 }
 ```
 
@@ -156,7 +156,3 @@ Here is the step to step guide for how to choose the version:
 1. Choose the Prisma version: Choose the one as you need.
 2. Choose the adapter version: If you are using Prisma vx.y.z, you can choose the latest adapter version in vx.y. Open an issue once you find the adapter version is not compatible with Prisma version.
 3. Choose the serverless driver version: You can always use the latest version according to the table above.
-
-## Limitations
-
-- [Set isolation level](https://www.prisma.io/docs/concepts/components/prisma-client/transactions#transaction-isolation-level) is not supported yet.
