@@ -154,6 +154,7 @@ export class PrismaTiDBCloudAdapter
     const dbName = config.database ? config.database : defaultDatabase;
     return {
       schemaName: dbName,
+      supportsRelationJoins: true,
     };
   }
 

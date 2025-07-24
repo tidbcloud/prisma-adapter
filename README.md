@@ -151,6 +151,7 @@ try {
 | v5.15.x | v5.15.x              | \>= v0.1.0        |
 | v5.20.x | v5.20.x              | \>= v0.1.0        |
 | v6.6.x  | v6.6.x               | \>= v0.1.0        |
+| v6.12.x  | v6.12.x               | \>= v0.1.0        |
 
 Here is the step to step guide for how to choose the version:
 1. Choose the Prisma version: Choose the one as you need.
