@@ -1,0 +1,34 @@
+name: test
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: pnpm
+
+      - name: install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: build
+        run: pnpm build
+      - name: test
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: | 
+          cd integration-test
+          npx prisma db push
+          npx prisma generate
+          node test.js
+
