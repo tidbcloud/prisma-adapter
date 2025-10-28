@@ -17,7 +17,8 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "emitDeclarationOnly": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["jest", "node"]
   },
   "exclude": ["**/dist", "**/declaration", "**/node_modules", "**/src/__tests__"]
 }

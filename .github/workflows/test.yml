@@ -27,8 +27,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: | 
-          cd integration-test
           npx prisma db push
           npx prisma generate
-          node test.js
+          npx jest integration-test
 
