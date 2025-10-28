@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  ci:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
