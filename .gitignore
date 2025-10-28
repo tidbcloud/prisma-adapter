@@ -43,3 +43,5 @@ reproductions/*
 dev.db
 junit.xml
 /output.txt
+
+generated/
