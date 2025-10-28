@@ -75,7 +75,7 @@ describe("tx test", () => {
     expect(queryUser2).not.toBeNull();
   });
 
-  test("tx rollback", async () => {
+  test("test tx rollback", async () => {
     const createUser1 = prisma.user.create({
       data: {
         email: "tx_rollback1@pingcap.com",
