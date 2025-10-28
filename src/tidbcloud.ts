@@ -15,6 +15,7 @@ import {
   type TiDBCloudColumnType,
   fieldToColumnType,
   customDecoder,
+  mapArg,
 } from "./conversion";
 import { name as packageName } from "../package.json";
 
@@ -89,11 +90,15 @@ class TiDBCloudQueryable<ClientT extends TiDBCloud.Connection | TiDBCloud.Tx>
     const { sql, args: values } = query;
 
     try {
-      const result = await this.client.execute(sql, values, {
-        arrayMode: true,
-        fullResult: true,
-        decoders: customDecoder,
-      });
+      const result = await this.client.execute(
+        sql,
+        values.map((val, i) => mapArg(val, query.argTypes[i])),
+        {
+          arrayMode: true,
+          fullResult: true,
+          decoders: customDecoder,
+        }
+      );
       return result as TiDBCloud.FullResult;
     } catch (e) {
       const error = e as Error;
