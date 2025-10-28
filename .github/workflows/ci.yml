@@ -21,9 +21,9 @@ jobs:
 
       - name: install dependencies
         run: pnpm install --frozen-lockfile
-      - name: lint
-        run: pnpm lint
       - name: build
         run: pnpm build
+      - name: lint
+        run: pnpm lint
       - name: fmt
         run: pnpm fmt-check
