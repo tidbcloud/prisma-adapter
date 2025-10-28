@@ -1,5 +1,5 @@
 import { PrismaTiDBCloud } from "../dist/index.mjs";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "./generated/prisma";
 import * as dotenv from "dotenv";
 
 let prisma: PrismaClient;
