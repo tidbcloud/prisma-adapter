@@ -82,7 +82,7 @@ describe("tx test", () => {
         name: "tx_user1",
       },
     });
-    const createUser2 = prisma.user.create({
+const createUser2 = prisma.user.create({
       data: {
         email: "tx_rollback1@pingcap.com",
         name: "tx_user2",

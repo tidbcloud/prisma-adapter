@@ -9,9 +9,10 @@
 
 ### Run the integration test
 
-1. Run `npx prisma db push` to push the schema to the database
-2. Run `npx prisma generate` to generate the Prisma client
-3. Run `npx jtest integration-test` to run the integration test
+1. cd to the `integration-test` directory
+2. Run `npx prisma db push` to push the schema to the database
+3. Run `npx prisma generate` to generate the Prisma client
+4. Run `npx jtest integration-test` to run the integration test
 
 ### Manual test
 
