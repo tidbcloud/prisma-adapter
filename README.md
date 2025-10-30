@@ -40,7 +40,8 @@ First, you need to create a Prisma schema file called schema.prisma and define t
 // schema.prisma
 generator client {
     provider        = "prisma-client-js"
-    previewFeatures = ["driverAdapters"]
+    output          = "../src/generated/prisma"
+    engineType      = "client"
 }
 
 datasource db {
@@ -63,7 +64,7 @@ Here is an example of query:
 ```js
 // query.js
 import { PrismaTiDBCloud } from '@tidbcloud/prisma-adapter';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from './generated/prisma';
 import dotenv from 'dotenv';
 
 // setup
@@ -94,7 +95,7 @@ Here is an example of transaction:
 ```js
 // query.js
 import { PrismaTiDBCloud } from '@tidbcloud/prisma-adapter';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from './generated/prisma';
 import dotenv from 'dotenv';
 
 // setup
